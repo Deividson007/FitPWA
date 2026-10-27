@@ -2,34 +2,22 @@ services:
   fit:
     image: ghcr.io/deividson007/fitpwa:latest
 
+    container_name: fit-homelab
+    restart: unless-stopped
+
     networks:
       - homelab
 
-    deploy:
-      replicas: 1
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=homelab"
 
-      restart_policy:
-        condition: any
+      - "traefik.http.routers.fit.rule=Host(`fit.homelab`)"
+      - "traefik.http.routers.fit.entrypoints=websecure"
+      - "traefik.http.routers.fit.tls=true"
 
-      update_config:
-        parallelism: 1
-        order: start-first
-
-      labels:
-        - "traefik.enable=true"
-
-        # Rede do Traefik
-        - "traefik.docker.network=homelab"
-        - "traefik.swarm.network=homelab"
-
-        # Rota
-        - "traefik.http.routers.fit.rule=Host(`fit.homelab`)"
-        - "traefik.http.routers.fit.entrypoints=websecure"
-        - "traefik.http.routers.fit.tls=true"
-
-        # Serviço
-        - "traefik.http.routers.fit.service=fit"
-        - "traefik.http.services.fit.loadbalancer.server.port=80"
+      - "traefik.http.routers.fit.service=fit"
+      - "traefik.http.services.fit.loadbalancer.server.port=80"
 
 networks:
   homelab:
