@@ -1,6 +1,6 @@
 services:
   fit:
-    image: ghcr.io/SEU_USUARIO/fitflow-pwa:latest
+    image: ghcr.io/Deividson007/fitflow-pwa:latest
 
     networks:
       - homelab
