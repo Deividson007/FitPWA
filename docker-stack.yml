@@ -1,22 +1,29 @@
-version: '3.8'
+version: "3.8"
+
 services:
   fitflow:
     image: registry.seudominio.com/fitflow:1.0.0
+
     networks:
       - proxy
+
     deploy:
       replicas: 1
+
       restart_policy:
         condition: any
+
       update_config:
         order: start-first
         parallelism: 1
+
       labels:
-        - traefik.enable=true
-        - traefik.http.routers.fitflow.rule=Host(`fitness.seudominio.com`)
-        - traefik.http.routers.fitflow.entrypoints=websecure
-        - traefik.http.routers.fitflow.tls=true
-        - traefik.http.services.fitflow.loadbalancer.server.port=80
+        - "traefik.enable=true"
+        - "traefik.http.routers.fitflow.rule=Host(`fit.homelab`)"
+        - "traefik.http.routers.fitflow.entrypoints=websecure"
+        - "traefik.http.routers.fitflow.tls=true"
+        - "traefik.http.services.fitflow.loadbalancer.server.port=80"
+
 networks:
   proxy:
     external: true
