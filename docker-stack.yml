@@ -1,29 +1,25 @@
-version: "3.8"
-
 services:
-  fitflow:
-    image: registry.seudominio.com/fitflow:1.0.0
+  fit:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    image: fitflow-pwa:latest
+    container_name: fit-homelab
+
+    restart: unless-stopped
 
     networks:
-      - proxy
+      - homelab
 
-    deploy:
-      replicas: 1
-
-      restart_policy:
-        condition: any
-
-      update_config:
-        order: start-first
-        parallelism: 1
-
-      labels:
-        - "traefik.enable=true"
-        - "traefik.http.routers.fitflow.rule=Host(`fit.homelab`)"
-        - "traefik.http.routers.fitflow.entrypoints=websecure"
-        - "traefik.http.routers.fitflow.tls=true"
-        - "traefik.http.services.fitflow.loadbalancer.server.port=80"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=homelab"
+      - "traefik.http.routers.fit.rule=Host(`fit.homelab`)"
+      - "traefik.http.routers.fit.entrypoints=websecure"
+      - "traefik.http.routers.fit.tls=true"
+      - "traefik.http.services.fit.loadbalancer.server.port=80"
 
 networks:
-  proxy:
+  homelab:
     external: true
