@@ -14,9 +14,17 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=homelab"
+
       - "traefik.http.routers.fit.rule=Host(`fit.homelab`)"
       - "traefik.http.routers.fit.entrypoints=websecure"
       - "traefik.http.routers.fit.tls=true"
+      - "traefik.http.routers.fit.service=fit"
+
+      - "traefik.http.routers.fit-mobile.rule=Host(`192.168.15.7`)"
+      - "traefik.http.routers.fit-mobile.entrypoints=fitsecure"
+      - "traefik.http.routers.fit-mobile.tls=true"
+      - "traefik.http.routers.fit-mobile.service=fit"
+
       - "traefik.http.services.fit.loadbalancer.server.port=80"
 
 networks:
