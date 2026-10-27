@@ -5,18 +5,18 @@ services:
     container_name: fit-homelab
     restart: unless-stopped
 
+    ports:
+      - "8089:80"
+
     networks:
       - homelab
 
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=homelab"
-
       - "traefik.http.routers.fit.rule=Host(`fit.homelab`)"
       - "traefik.http.routers.fit.entrypoints=websecure"
       - "traefik.http.routers.fit.tls=true"
-
-      - "traefik.http.routers.fit.service=fit"
       - "traefik.http.services.fit.loadbalancer.server.port=80"
 
 networks:
