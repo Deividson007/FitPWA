@@ -12,14 +12,23 @@ services:
         condition: any
 
       update_config:
+        parallelism: 1
         order: start-first
 
       labels:
         - "traefik.enable=true"
+
+        # Rede do Traefik
         - "traefik.docker.network=homelab"
+        - "traefik.swarm.network=homelab"
+
+        # Rota
         - "traefik.http.routers.fit.rule=Host(`fit.homelab`)"
         - "traefik.http.routers.fit.entrypoints=websecure"
         - "traefik.http.routers.fit.tls=true"
+
+        # Serviço
+        - "traefik.http.routers.fit.service=fit"
         - "traefik.http.services.fit.loadbalancer.server.port=80"
 
 networks:
