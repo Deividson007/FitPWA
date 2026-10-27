@@ -20,7 +20,7 @@ services:
       - "traefik.http.routers.fit.tls=true"
       - "traefik.http.routers.fit.service=fit"
 
-      - "traefik.http.routers.fit-mobile.rule=Host(`192.168.15.7`)"
+      - "traefik.http.routers.fit-mobile.rule=PathPrefix(`/`)"
       - "traefik.http.routers.fit-mobile.entrypoints=fitsecure"
       - "traefik.http.routers.fit-mobile.tls=true"
       - "traefik.http.routers.fit-mobile.service=fit"
